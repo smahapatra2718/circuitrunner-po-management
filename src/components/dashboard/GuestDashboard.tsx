@@ -105,6 +105,8 @@ export const GuestDashboard: React.FC = () => {
   };
 
   const totalBudget = filteredSubOrgs.reduce((sum, org) => sum + org.budgetAllocated, 0);
+  const initialBudget = filteredSubOrgs.reduce((sum, org) => sum + org.initialBudget, 0);
+  const totalCredit = filteredSubOrgs.reduce((sum, org) => sum + org.credit, 0);
   const totalSpent = filteredSubOrgs.reduce((sum, org) => sum + org.budgetSpent, 0);
   const budgetRemaining = totalBudget - totalSpent;
 
@@ -242,15 +244,20 @@ export const GuestDashboard: React.FC = () => {
 
       {/* Stats Grid - Updated with filtered data */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card className="p-6">
+        <Card className="p-4 sm:p-6">
           <div className="flex items-center">
-            <div className="p-3 bg-green-900/50 rounded-lg border border-green-700">
-              <DollarSign className="h-6 w-6 text-green-400" />
+            <div className="p-2 bg-green-900/50 rounded-lg border border-green-700 flex-shrink-0">
+              <DollarSign className="h-5 w-5 sm:h-6 sm:w-6 text-green-400" />
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-400">Total Budget</p>
-              <p className="text-2xl font-bold text-gray-100">
+            <div className="ml-3 sm:ml-4 min-w-0">
+              <p className="text-xs sm:text-sm font-medium text-gray-400">
+                {selectedSubOrg === 'all' ? 'Total Budget' : 'Budget'}
+              </p>
+              <p className="text-lg sm:text-2xl font-bold text-gray-100 truncate">
                 ${totalBudget.toLocaleString()}
+              </p>
+              <p className=" sm:text-2xl font-bold text-gray-300 truncate">
+                <span className="text-amber-500 text-base">${initialBudget.toLocaleString()}</span> <span className="text-base">+</span> <span className="text-green-500 text-base">${totalCredit.toLocaleString()}</span>
               </p>
             </div>
           </div>
